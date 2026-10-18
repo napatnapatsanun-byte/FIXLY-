@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="th" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeHacks Thailand - Everyday Problem Solver & Life Hacks Hub</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Prompt & Kanit) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            teal: '#0D9488',
+                            lightTeal: '#2DD4BF',
+                            orange: '#F97316',
+                            bg: '#F8FAFC',
+                            card: '#FFFFFF'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Prompt', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Prompt', sans-serif; }
+        .glass-header {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .tab-active {
+            color: #0D9488 !important;
+            background-color: #CCFBF1 !important;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen selection:bg-teal-100 selection:text-teal-800">
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3">
+        <i id="toast-icon" class="fas fa-check-circle text-teal-400 text-lg"></i>
+        <span id="toast-message" class="text-sm font-medium">ทำรายการเรียบร้อย</span>
+    </div>
+
+    <!-- MAIN NAVIGATION BAR (Sticky Header) -->
+    <header class="glass-header sticky top-0 z-40 border-b border-slate-200/80 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                
+                <!-- Brand Logo -->
+                <div class="flex items-center gap-3 cursor-pointer group" onclick="navigateTo('home')">
+                    <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-teal-500 to-teal-700 flex items-center justify-center text-white text-xl shadow-md shadow-teal-500/20 group-hover:scale-105 transition">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-xl sm:text-2xl text-slate-900 tracking-tight">Life<span class="text-teal-600">Hacks</span></span>
+                        <span class="text-[11px] block text-slate-400 font-normal -mt-1 hidden sm:block">Everyday Problem Solver</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Bar (All 8 Pages Tabs) -->
+                <nav class="hidden lg:flex items-center gap-1 overflow-x-auto py-2">
+                    <button onclick="navigateTo('home')" class="nav-btn tab-active px-3 py-2 rounded-xl text-xs font-medium text-slate-600 hover:text-teal-600 hover:bg-slate-100 transition whitespace-nowrap" data-page="home">
+                        <i class="fas fa-home mr-1"></i>หน้าแรก
+                    </button>
+                    <button onclick="navigateTo('housekeeping')" class="nav-btn px-3 py-2 rounded-xl text-xs font-medium text-slate-600 hover:text-teal-600 hover:bg-slate-100 transition whitespace-nowrap" data-page="housekeeping">
+                        <i class="fas fa-broom mr-1"></i>บ้านและงานบ้าน
+                    </button>
+                    <button onclick="navigateTo('work')" class="nav-btn px-3 py-2 rounded-xl text-xs font-medium text-slate-600 hover:text-teal-600 hover:bg-slate-100 transition whitespace-nowrap" data-page="work">
+                        <i class="fas fa-briefcase mr-1"></i>การทำงานและการเรียน
+                    </button>
+                    <button onclick="navigateTo('health')" class="nav-btn px-3 py-2 rounded-xl text-xs font-medium text-slate-600 hover:text-teal-600 hover:bg-slate-100 transition whitespace-nowrap" data-page="health">
+                        <i class="fas fa-heartbeat mr-1"></i>สุขภาพและการนอน
+                    </button>
+                    <button onclick="navigateTo('finance')" class="nav-btn px-3 py-2 rounded-xl text-xs font-medium text-slate-600 hover:text-teal-600 hover:bg-slate-100 transition whitespace-nowrap" data-page="finance">
+                        <i class="fas fa-wallet mr-1"></i>การเงินส่วนบุคคล
+                    </button>
+                    <button onclick="navigateTo('relationships')" class="nav-btn px-3 py-2 rounded-xl text-xs font-medium text-slate-600 hover:text-teal-600 hover:bg-slate-100 transition whitespace-nowrap" data-page="relationships">
+                        <i class="fas fa-comments mr-1"></i>ความสัมพันธ์
+                    </button>
+                    <button onclick="navigateTo('tech')" class="nav-btn px-3 py-2 rounded-xl text-xs font-medium text-slate-600 hover:text-teal-600 hover:bg-slate-100 transition whitespace-nowrap" data-page="tech">
+                        <i class="fas fa-laptop-code mr-1"></i>เทคโนโลยี & ไอที
+                    </button>
+                    <button onclick="navigateTo('tools')" class="nav-btn px-3 py-2 rounded-xl text-xs font-medium text-slate-600 hover:text-teal-600 hover:bg-slate-100 transition whitespace-nowrap" data-page="tools">
+                        <i class="fas fa-tools mr-1"></i>เครื่องมือ & ชุมชน
+                    </button>
+                </nav>
+
+                <!-- Action Items: Favorites Bookmark & Mobile Menu -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <button onclick="openSavedModal()" class="relative p-2.5 sm:p-3 rounded-2xl bg-slate-100 text-slate-700 hover:text-teal-600 hover:bg-teal-50 transition">
+                        <i class="fas fa-bookmark text-base sm:text-lg"></i>
+                        <span id="saved-count-badge" class="absolute -top-1 -right-1 bg-orange-500 text-white text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm">0</span>
+                    </button>
+                    
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="lg:hidden p-2.5 rounded-2xl bg-slate-100 text-slate-700 hover:bg-slate-200">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Navigation Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-200 bg-white/95 backdrop-blur-md px-4 pt-3 pb-5 space-y-1">
+            <button onclick="navigateTo('home'); toggleMobileMenu()" class="w-full text-left px-3.5 py-2.5 rounded-xl text-slate-700 font-medium hover:bg-teal-50 hover:text-teal-600 text-sm flex items-center gap-3"><i class="fas fa-home w-5 text-teal-500"></i> หน้าแรก (Home)</button>
+            <button onclick="navigateTo('housekeeping'); toggleMobileMenu()" class="w-full text-left px-3.5 py-2.5 rounded-xl text-slate-700 font-medium hover:bg-teal-50 hover:text-teal-600 text-sm flex items-center gap-3"><i class="fas fa-broom w-5 text-teal-500"></i> ปัญหาบ้านและงานบ้าน</button>
+            <button onclick="navigateTo('work'); toggleMobileMenu()" class="w-full text-left px-3.5 py-2.5 rounded-xl text-slate-700 font-medium hover:bg-teal-50 hover:text-teal-600 text-sm flex items-center gap-3"><i class="fas fa-briefcase w-5 text-teal-500"></i> ปัญหาการทำงานและการเรียน</button>
+            <button onclick="navigateTo('health'); toggleMobileMenu()" class="w-full text-left px-3.5 py-2.5 rounded-xl text-slate-700 font-medium hover:bg-teal-50 hover:text-teal-600 text-sm flex items-center gap-3"><i class="fas fa-heartbeat w-5 text-teal-500"></i> ปัญหาสุขภาพและการนอน</button>
+            <button onclick="navigateTo('finance'); toggleMobileMenu()" class="w-full text-left px-3.5 py-2.5 rounded-xl text-slate-700 font-medium hover:bg-teal-50 hover:text-teal-600 text-sm flex items-center gap-3"><i class="fas fa-wallet w-5 text-teal-500"></i> ปัญหาการเงินส่วนบุคคล</button>
+            <button onclick="navigateTo('relationships'); toggleMobileMenu()" class="w-full text-left px-3.5 py-2.5 rounded-xl text-slate-700 font-medium hover:bg-teal-50 hover:text-teal-600 text-sm flex items-center gap-3"><i class="fas fa-comments w-5 text-teal-500"></i> ปัญหาความสัมพันธ์และการสื่อสาร</button>
+            <button onclick="navigateTo('tech'); toggleMobileMenu()" class="w-full text-left px-3.5 py-2.5 rounded-xl text-slate-700 font-medium hover:bg-teal-50 hover:text-teal-600 text-sm flex items-center gap-3"><i class="fas fa-laptop-code w-5 text-teal-500"></i> ปัญหาเทคโนโลยีและไอที</button>
+            <button onclick="navigateTo('tools'); toggleMobileMenu()" class="w-full text-left px-3.5 py-2.5 rounded-xl text-slate-700 font-medium hover:bg-teal-50 hover:text-teal-600 text-sm flex items-center gap-3"><i class="fas fa-tools w-5 text-teal-500"></i> เครื่องมือช่วยตัดสินใจ & ส่งต่อปัญหา</button>
+        </div>
+    </header>
+
+    <!-- MAIN PAGES CONTAINER (SPA) -->
+    <main class="flex-grow">
+        
+        <!-- PAGE 1: HOME & QUICK SEARCH -->
+        <section id="page-home" class="page-content min-h-[80vh]">
+            <!-- Hero Banner & Quick Search -->
+            <div class="bg-gradient-to-b from-teal-500/10 via-slate-50 to-slate-50 py-16 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
+                <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+                    <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-100 text-teal-700 text-xs font-bold tracking-wider uppercase">
+                        <i class="fas fa-sparkles text-teal-500"></i> Everyday Problem Solver & Life Hacks
+                    </span>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight">
+                        เปลี่ยนปัญหาในชีวิตประจำวัน <br class="hidden sm:inline">ให้กลายเป็นเรื่อง <span class="text-teal-600 underline decoration-teal-300 decoration-wavy">ง่ายดายในไม่กี่ขั้นตอน</span>
+                    </h1>
+                    <p class="text-slate-600 text-base sm:text-lg max-w-2xl mx-auto font-normal">
+                        คลังรวบรวมทางออกสั้นๆ สรุปตรงประเด็น ครอบคลุมเรื่องบ้าน งาน สุขภาพ การเงิน ความสัมพันธ์ และเทคโนโลยี
+                    </p>
+
+                    <!-- Quick Search Bar -->
+                    <div class="relative max-w-xl mx-auto mt-8">
+                        <div class="relative flex items-center">
+                            <i class="fas fa-search absolute left-4 text-slate-400 text-lg"></i>
+                            <input type="text" id="global-search-input" onkeyup="handleGlobalSearch(event)" placeholder="พิมพ์ปัญหาที่พบ เช่น 'นอนไม่หลับ', 'คราบสนิม', 'ปฏิเสธคน'..." 
+                                   class="w-full pl-12 pr-28 py-4 bg-white rounded-2xl border border-slate-200 shadow-xl focus:outline-none focus:ring-2 focus:ring-teal-500/50 text-slate-700 text-sm sm:text-base">
+                            <button onclick="triggerGlobalSearch()" class="absolute right-2.5 px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl transition text-sm shadow-md">
+                                ค้นหา
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories Overview Grid -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                    <i class="fas fa-th-large text-teal-600"></i> หมวดหมู่ปัญหาในชีวิตประจำวัน
+                </h2>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+                    <div onclick="navigateTo('housekeeping')" class="p-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md hover:-translate-y-1 transition cursor-pointer text-center group">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center text-xl mb-3 group-hover:bg-orange-600 group-hover:text-white transition">
+                            <i class="fas fa-broom"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-700 text-sm">บ้าน & งานบ้าน</h3>
+                    </div>
+                    <div onclick="navigateTo('work')" class="p-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md hover:-translate-y-1 transition cursor-pointer text-center group">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl mb-3 group-hover:bg-blue-600 group-hover:text-white transition">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-700 text-sm">การทำงาน & การเรียน</h3>
+                    </div>
+                    <div onclick="navigateTo('health')" class="p-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md hover:-translate-y-1 transition cursor-pointer text-center group">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl mb-3 group-hover:bg-rose-600 group-hover:text-white transition">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-700 text-sm">สุขภาพ & การนอน</h3>
+                    </div>
+                    <div onclick="navigateTo('finance')" class="p-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md hover:-translate-y-1 transition cursor-pointer text-center group">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl mb-3 group-hover:bg-emerald-600 group-hover:text-white transition">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-700 text-sm">การเงินส่วนบุคคล</h3>
+                    </div>
+                    <div onclick="navigateTo('relationships')" class="p-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md hover:-translate-y-1 transition cursor-pointer text-center group">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl mb-3 group-hover:bg-purple-600 group-hover:text-white transition">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-700 text-sm">ความสัมพันธ์</h3>
+                    </div>
+                    <div onclick="navigateTo('tech')" class="p-4 bg-white rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-md hover:-translate-y-1 transition cursor-pointer text-center group">
+                        <div class="w-12 h-12 mx-auto rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center text-xl mb-3 group-hover:bg-indigo-600 group-hover:text-white transition">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-700 text-sm">ไอที & ดิจิทัล</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Random Life Hack Widget -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                <div class="bg-gradient-to-r from-teal-600 to-teal-800 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+                    <div class="relative z-10 max-w-3xl">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 text-teal-100 text-xs font-semibold backdrop-blur-md">
+                            <i class="fas fa-dice text-amber-300"></i> วิดเจ็ตสุ่ม Life Hack ประจำวัน
+                        </span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold mt-2">ต้องการไอเดียแก้ปัญหาด่วนวันนี้?</h2>
+                        
+                        <div id="daily-fix-box" class="mt-5 p-5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 transition-all">
+                            <span class="text-xs font-bold text-teal-200 uppercase tracking-wide" id="daily-fix-cat">หมวดหมู่: สุขภาพและการนอน</span>
+                            <h3 class="text-xl font-bold text-white mt-1" id="daily-fix-title">สูตร 20-20-20 พักสายตาจากหน้าจอ</h3>
+                            <p class="text-sm text-slate-100 mt-2 leading-relaxed" id="daily-fix-desc">ทุกๆ 20 นาทีของการมองจอ ให้มองออกไปที่วัตถุไกลอย่างน้อย 20 ฟุต เป็นเวลา 20 วินาที ช่วยลดอาการตาล้าได้อย่างชะงัก</p>
+                        </div>
+
+                        <button onclick="generateDailyFix()" class="mt-5 px-6 py-3 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl shadow-lg transition flex items-center gap-2 text-sm">
+                            <i class="fas fa-random"></i> สุ่ม Life Hack ใหม่
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trending Articles Section -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <div class="flex justify-between items-center mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fas fa-fire text-orange-500"></i> บทความแนะนำ & วิธีแก้ปัญหายอดฮิต
+                        </h2>
+                        <p class="text-slate-500 text-sm">รวมทริกที่คนค้นหาและนิยมนำไปใช้ได้ผลจริงมากที่สุด</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="trending-container">
+                    <!-- Cards Injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 2: HOME & LIVING -->
+        <section id="page-housekeeping" class="page-content hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="border-b border-slate-200 pb-6 mb-8">
+                <span class="text-xs font-bold text-orange-500 tracking-wider uppercase">Category 01</span>
+                <h1 class="text-3xl font-extrabold text-slate-900 mt-1">ปัญหาบ้านและงานบ้าน (Home & Living)</h1>
+                <p class="text-slate-600 mt-2">วิธีขจัดคราบเปื้อน, ปัญหากลิ่นอับ, แก้ท่อน้ำอุดตัน, วิธีกำจัดมดแมลง และเทคนิคจัดบ้าน</p>
+            </div>
+
+            <div class="mb-6 flex flex-wrap gap-3">
+                <input type="text" oninput="filterCategoryCards('housekeeping', this.value)" placeholder="ค้นหาในหมวดบ้านและงานบ้าน..." class="px-4 py-2.5 rounded-xl border border-slate-200 text-sm w-full sm:w-72 focus:ring-2 focus:ring-teal-500 outline-none">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="housekeeping-cards"></div>
+        </section>
+
+        <!-- PAGE 3: WORK & PRODUCTIVITY -->
+        <section id="page-work" class="page-content hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="border-b border-slate-200 pb-6 mb-8">
+                <span class="text-xs font-bold text-blue-500 tracking-wider uppercase">Category 02</span>
+                <h1 class="text-3xl font-extrabold text-slate-900 mt-1">ปัญหาการทำงานและการเรียน (Work & Productivity)</h1>
+                <p class="text-slate-600 mt-2">เอาชนะอาการสมาธิสั้น/ผลัดวันประกันพรุ่ง (Pomodoro), แก้ Burnout, กฎบริหารเวลา 8-8-8 และการจดโน้ต Cornell</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="work-cards"></div>
+        </section>
+
+        <!-- PAGE 4: HEALTH & WELLNESS -->
+        <section id="page-health" class="page-content hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="border-b border-slate-200 pb-6 mb-8">
+                <span class="text-xs font-bold text-rose-500 tracking-wider uppercase">Category 03</span>
+                <h1 class="text-3xl font-extrabold text-slate-900 mt-1">ปัญหาสุขภาพและการนอน (Health & Wellness)</h1>
+                <p class="text-slate-600 mt-2">แก้ปัญหานอนไม่หลับ (Sleep Hygiene), ปวดหลัง/Office Syndrome, และลดความเครียดสะสม</p>
+            </div>
+
+            <!-- Stretching Interactive Timer Widget -->
+            <div class="mb-10 bg-gradient-to-r from-rose-50 via-orange-50 to-amber-50 border border-rose-100 rounded-3xl p-6 sm:p-8 shadow-sm">
+                <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+                    <div class="space-y-2 text-center lg:text-left">
+                        <span class="inline-block px-3 py-1 bg-rose-200 text-rose-800 text-xs font-bold rounded-full">Interactive Feature</span>
+                        <h2 class="text-2xl font-extrabold text-slate-800">ระบบ Timer นัดยืดเส้นยืดสาย 30 วินาที</h2>
+                        <p class="text-sm text-slate-600">นั่งทำงานนานเกินไปแล้วรึเปล่า? เริ่มต้นยืดกล้ามเนื้อต้นคอและบ่าเป็นเวลา 30 วินาทีตอนนี้เลย</p>
+                    </div>
+
+                    <div class="flex flex-col items-center bg-white p-6 rounded-2xl shadow-md min-w-[280px] border border-slate-100">
+                        <div class="text-5xl font-extrabold text-rose-500 font-mono mb-2" id="stretch-timer">00:30</div>
+                        <p class="text-xs text-slate-500 mb-4 font-medium" id="stretch-pose">ท่า: เอียงศีรษะไปทางขวา ค้างไว้</p>
+                        <div class="flex gap-2 w-full">
+                            <button onclick="startStretchTimer()" id="btn-start-stretch" class="flex-1 py-2.5 bg-rose-500 hover:bg-rose-600 text-white rounded-xl text-xs font-bold transition">เริ่มนับเวลา</button>
+                            <button onclick="resetStretchTimer()" class="px-4 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-xs font-bold transition">รีเซ็ต</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="health-cards"></div>
+        </section>
+
+        <!-- PAGE 5: PERSONAL FINANCE -->
+        <section id="page-finance" class="page-content hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="border-b border-slate-200 pb-6 mb-8">
+                <span class="text-xs font-bold text-emerald-500 tracking-wider uppercase">Category 04</span>
+                <h1 class="text-3xl font-extrabold text-slate-900 mt-1">ปัญหาการเงินส่วนบุคคล (Personal Finance)</h1>
+                <p class="text-slate-600 mt-2">บริหารเงินเดือนไม่พอใช้ (กฎ 50/30/20), เทคนิคปลดหนี้, และวางแผนออมเงินก้อนแรก</p>
+            </div>
+
+            <!-- Interactive Budget Calculator -->
+            <div class="mb-10 bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">เครื่องมือ Interactive Budget Calculator (กฎ 50/30/20)</h2>
+                        <p class="text-xs text-slate-500">กรอกรายได้สุทธิรายเดือนเพื่อคำนวณการแบ่งสัดส่วนเงินทันที</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-2">รายได้ต่อเดือน (บาท)</label>
+                            <input type="number" id="calc-income" value="30000" oninput="calculateBudget()" class="w-full px-4 py-3 bg-slate-50 rounded-xl border border-slate-200 text-slate-800 font-extrabold text-lg focus:ring-2 focus:ring-emerald-500 outline-none">
+                        </div>
+                        <div class="p-4 bg-emerald-50 rounded-2xl text-xs text-emerald-900 leading-relaxed space-y-1 border border-emerald-100">
+                            <p class="font-bold"><i class="fas fa-info-circle mr-1"></i> หลักการแบ่งเงิน 50/30/20:</p>
+                            <p>• <strong>50% Needs:</strong> ค่าใช้จ่ายจำเป็น (ค่าน้ำไฟ ค่าห้อง อาหาร)</p>
+                            <p>• <strong>30% Wants:</strong> ความสุขส่วนตัว (ช้อปปิ้ง เที่ยว สังสรรค์)</p>
+                            <p>• <strong>20% Savings:</strong> เงินออม/ลงทุน/ปลดหนี้</p>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="p-5 bg-blue-50 border border-blue-100 rounded-2xl flex flex-col justify-between">
+                            <div>
+                                <span class="text-[11px] font-bold text-blue-600 uppercase tracking-wide">50% ค่าใช้จ่ายจำเป็น</span>
+                                <h3 class="text-2xl font-extrabold text-blue-900 mt-2" id="res-needs">15,000 ฿</h3>
+                            </div>
+                            <p class="text-[11px] text-blue-600 mt-4">ค่าเช่าบ้าน, ค่าอาหาร, ค่าเดินทาง, ค่าน้ำไฟ</p>
+                        </div>
+
+                        <div class="p-5 bg-purple-50 border border-purple-100 rounded-2xl flex flex-col justify-between">
+                            <div>
+                                <span class="text-[11px] font-bold text-purple-600 uppercase tracking-wide">30% ค่าใช้จ่ายส่วนตัว</span>
+                                <h3 class="text-2xl font-extrabold text-purple-900 mt-2" id="res-wants">9,000 ฿</h3>
+                            </div>
+                            <p class="text-[11px] text-purple-600 mt-4">ช้อปปิ้ง, ดูหนัง, กินชาบู, ท่องเที่ยว</p>
+                        </div>
+
+                        <div class="p-5 bg-emerald-50 border border-emerald-100 rounded-2xl flex flex-col justify-between">
+                            <div>
+                                <span class="text-[11px] font-bold text-emerald-600 uppercase tracking-wide">20% เงินออม & ปลดหนี้</span>
+                                <h3 class="text-2xl font-extrabold text-emerald-900 mt-2" id="res-savings">6,000 ฿</h3>
+                            </div>
+                            <p class="text-[11px] text-emerald-600 mt-4">เงินสำรองฉุกเฉิน, ออมหุ้น/กองทุน, จ่ายหนี้</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="finance-cards"></div>
+        </section>
+
+        <!-- PAGE 6: RELATIONSHIPS & COMMUNICATION -->
+        <section id="page-relationships" class="page-content hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="border-b border-slate-200 pb-6 mb-8">
+                <span class="text-xs font-bold text-purple-500 tracking-wider uppercase">Category 05</span>
+                <h1 class="text-3xl font-extrabold text-slate-900 mt-1">ปัญหาความสัมพันธ์และการสื่อสาร (Relationships)</h1>
+                <p class="text-slate-600 mt-2">เทคนิคการปฏิเสธคนอย่างนุ่มนวล (How to say NO), รับมือกับ toxic people, และการสื่อสารสันติ (NVC)</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="relationships-cards"></div>
+        </section>
+
+        <!-- PAGE 7: TECH & DIGITAL LIFE -->
+        <section id="page-tech" class="page-content hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div class="border-b border-slate-200 pb-6 mb-8">
+                <span class="text-xs font-bold text-indigo-500 tracking-wider uppercase">Category 06</span>
+                <h1 class="text-3xl font-extrabold text-slate-900 mt-1">ปัญหาเทคโนโลยีและไอที (Tech & Digital Life)</h1>
+                <p class="text-slate-600 mt-2">โทรศัพท์เมมเต็ม/เครื่องช้า, วิธีจำรหัสผ่านง่ายๆ แต่ปลอดภัย, และ Google Search Cheat Sheet ตัวช่วยค้นหาขั้นสูง</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="tech-cards"></div>
+        </section>
+
+        <!-- PAGE 8: TOOLS & COMMUNITY -->
+        <section id="page-tools" class="page-content hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+            <div class="border-b border-slate-200 pb-6">
+                <span class="text-xs font-bold text-teal-600 tracking-wider uppercase">Category 07 & Interactive Tools</span>
+                <h1 class="text-3xl font-extrabold text-slate-900 mt-1">เครื่องมือช่วยตัดสินใจ & ส่งต่อปัญหา (Tools & Community)</h1>
+                <p class="text-slate-600 mt-2">วงล้อสุ่มช่วยตัดสินใจ (Decision Wheel), ฟอร์มส่งปัญหา และบอร์ดแชร์เทคนิคจากชุมชน</p>
+            </div>
+
+            <!-- Decision Wheel / Generator Tool -->
+            <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+                <div class="max-w-2xl mx-auto text-center">
+                    <span class="px-3.5 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded-full">Decision Wheel Tool</span>
+                    <h2 class="text-2xl font-extrabold text-slate-800 mt-2">วงล้อสุ่มช่วยตัดสินใจปัญหา</h2>
+                    <p class="text-slate-500 text-sm mt-1">พิมพ์ทางเลือกของคุณ คั่นด้วยเครื่องหมายจุลภาค (,) แล้วกดสุ่มสุ่มสุ่มได้เลย!</p>
+
+                    <div class="mt-6 space-y-4">
+                        <input type="text" id="decision-options" value="กินส้มตำ, กินชาบู, ทำอาหารกินเองที่บ้าน, สั่งก๋วยเตี๋ยว" 
+                               class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-teal-500 outline-none">
+                        
+                        <div id="decision-result-box" class="h-24 bg-slate-100 rounded-2xl flex items-center justify-center border-2 border-dashed border-slate-300 transition-all">
+                            <span class="text-lg font-bold text-slate-500" id="decision-result-text">กดปุ่มสุ่มเพื่อสุ่มคำตอบ</span>
+                        </div>
+
+                        <button onclick="spinDecisionHelper()" id="spin-btn" class="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white font-bold rounded-xl shadow-lg transition">
+                            <i class="fas fa-arrows-spin mr-2"></i> สุ่มทางเลือกด่วน!
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grid 2 Columns: Problem Submission Form + Community Board -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Problem Submission Form -->
+                <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+                    <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2 mb-2">
+                        <i class="fas fa-paper-plane text-teal-600"></i> ส่งต่อปัญหาของคุณให้เพื่อนๆ ช่วยแก้
+                    </h2>
+                    <p class="text-xs text-slate-500 mb-6">เจอปัญหาในชีวิตประจำวันที่ต้องการคำตอบ? ส่งคำถามไว้ที่นี่</p>
+
+                    <form onsubmit="handleProblemSubmit(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">ชื่อ / นามแฝง</label>
+                            <input type="text" id="submit-author" required placeholder="เช่น น้องแพรว สายลุย" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">หมวดหมู่ปัญหา</label>
+                            <select id="submit-cat" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none">
+                                <option value="บ้านและงานบ้าน">บ้านและงานบ้าน</option>
+                                <option value="การทำงานและการเรียน">การทำงานและการเรียน</option>
+                                <option value="สุขภาพและการนอน">สุขภาพและการนอน</option>
+                                <option value="การเงินส่วนบุคคล">การเงินส่วนบุคคล</option>
+                                <option value="ความสัมพันธ์">ความสัมพันธ์</option>
+                                <option value="เทคโนโลยีและไอที">เทคโนโลยีและไอที</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">รายละเอียดปัญหาที่พบเจอ</label>
+                            <textarea id="submit-desc" required rows="3" placeholder="ระบุปัญหาของคุณ..." class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-teal-500 outline-none"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold text-sm rounded-xl transition shadow-md">
+                            โพสต์ส่งปัญหา
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Community Hacks Board -->
+                <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm flex flex-col justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2 mb-2">
+                            <i class="fas fa-users text-orange-500"></i> บอร์ดแชร์เทคนิคจากชุมชน
+                        </h2>
+                        <p class="text-xs text-slate-500 mb-6">ข้อคิดและทริกการแก้ปัญหาดีๆ จากผู้ใช้งานจริง</p>
+
+                        <div id="community-posts-container" class="space-y-3 max-h-[360px] overflow-y-auto pr-2"></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- SAVED FAVORITES BOOKMARK MODAL -->
+    <div id="saved-modal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-6 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fas fa-bookmark text-teal-600"></i> บทความที่คุณบันทึกไว้ (Bookmark)
+                </h3>
+                <button onclick="closeSavedModal()" class="text-slate-400 hover:text-slate-600 p-2 text-xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="saved-items-list" class="p-6 overflow-y-auto space-y-4 flex-grow"></div>
+            <div class="p-4 border-t border-slate-200 bg-slate-50 text-right">
+                <button onclick="closeSavedModal()" class="px-5 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-bold rounded-xl">ปิดหน้าต่าง</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- DETAIL ARTICLE MODAL -->
+    <div id="detail-modal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+            <div class="p-6 border-b border-slate-100 flex justify-between items-start">
+                <div>
+                    <span id="detail-cat" class="px-2.5 py-1 bg-teal-100 text-teal-800 text-[11px] font-bold rounded-md">หมวดหมู่</span>
+                    <h3 id="detail-title" class="text-xl font-bold text-slate-900 mt-2 leading-tight">หัวข้อวิธีแก้ปัญหา</h3>
+                </div>
+                <button onclick="closeDetailModal()" class="text-slate-400 hover:text-slate-600 p-1 text-xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-4 flex-grow text-slate-600 text-sm leading-relaxed" id="detail-body"></div>
+            <div class="p-4 border-t border-slate-100 bg-slate-50 flex justify-between items-center">
+                <button id="modal-bookmark-btn" onclick="" class="px-4 py-2 rounded-xl text-xs font-bold border flex items-center gap-2">
+                    <i class="fas fa-bookmark"></i> บันทึกเก็บไว้
+                </button>
+                <button onclick="closeDetailModal()" class="px-5 py-2 bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold rounded-xl">ปิด</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-slate-400 text-xs space-y-2">
+            <p class="font-bold text-slate-600">© 2026 LifeHacks Thailand - Everyday Problem Solver & Life Hacks Hub</p>
+            <p>คู่มือแก้ไขปัญหาในชีวิตประจำวันที่ครอบคลุมและใช้งานง่ายที่สุด</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // MASTER DATA OF ALL LIFE HACKS (All 8 Categories Covered)
+        const HACKS_DATA = [
+            // Housekeeping
+            {
+                id: 'hk1',
+                category: 'housekeeping',
+                categoryName: 'บ้านและงานบ้าน',
+                title: 'วิธีขจัดคราบฝังลึกบนเสื้อผ้าด้วยของใกล้ตัว',
+                summary: 'แก้ปัญหาคราบเปื้อนชา กาแฟ คราบน้ำมัน หรือหมึกปากกาบนเสื้อผ้าตัวโปรดด้วยเบกกิ้งโซดา น้ำส้มสายชู และแป้งฝุ่น',
+                steps: [
+                    'คราบมัน/ซอส: โรยแป้งฝุ่นตรงจุดคราบมันไว้ 10 นาทีเพื่อให้แป้งดูดน้ำมัน แล้วใช้ซันไลต์ถูออกก่อนซักปกติ',
+                    'คราบเปื้อนชา/กาแฟ: นำผ้ามะนาวถูตรงรอยเปื้อนแล้วล้างออกด้วยน้ำอุ่น',
+                    'คราบหมึกปากกา: ฉีดสเปรย์แอลกอฮอล์ลงบนคราบแล้วใช้ผ้าสะอาดซับออกเบาๆ'
+                ],
+                trending: true,
+                badge: 'Hot'
+            },
+            {
+                id: 'hk2',
+                category: 'housekeeping',
+                categoryName: 'บ้านและงานบ้าน',
+                title: 'แก้ปัญหากลิ่นอับในห้องนอนและตู้เสื้อผ้า',
+                summary: 'ใช้ถ่านหุงต้มหรือกากกาแฟตากแห้งใส่ถุงตาข่ายไว้ตามมุมห้อง ช่วยดูดกลิ่นอับได้อย่างเห็นผล',
+                steps: [
+                    'ใส่กากกาแฟตากแห้งหรือเบกกิ้งโซดาในถุงผ้าตาข่าย วางไว้ในตู้เสื้อผ้า',
+                    'ผสมน้ำส้มสายชูกับน้ำเปล่า 1:1 ฉีดพ่นผ้าม่านเพื่อลดกลิ่นอับและฆ่าเชื้อโรค',
+                    'เปิดหน้าต่างรับแสงแดดช่วงเช้า 20 นาทีระบายอากาศ'
+                ],
+                trending: true,
+                badge: 'ยอดฮิต'
+            },
+            {
+                id: 'hk3',
+                category: 'housekeeping',
+                categoryName: 'บ้านและงานบ้าน',
+                title: 'แก้ท่อน้ำอุดตันโดยไม่ต้องใช้สารเคมีรุนแรง',
+                summary: 'สูตรเบกกิ้งโซดา + น้ำส้มสายชู + น้ำต้มสุก กัดกร่อนคราบไขมันและสิ่งสกปรกอุดตันได้อย่างง่ายดาย',
+                steps: [
+                    'เทเบกกิ้งโซดา 1 ถ้วยลงไปในท่อระบายน้ำ',
+                    'เทน้ำส้มสายชูตามลงไป 1 ถ้วย จะเกิดฟองก๊าซ ทิ้งไว้ 15-20 นาที',
+                    'ราดตามด้วยน้ำต้มเดือด 1 กาใหญ่'
+                ],
+                trending: false
+            },
+            {
+                id: 'hk4',
+                category: 'housekeeping',
+                categoryName: 'บ้านและงานบ้าน',
+                title: 'วิธีกำจัดมดและแมลงรบกวนด้วยวิธีธรรมชาติ',
+                summary: 'เช็ดทำความสะอาดทางเดินมดด้วยน้ำส้มสายชูผสมน้ำเปล่าเพื่อลบรอยฟีโรโมนของมด',
+                steps: [
+                    'ผสมน้ำส้มสายชูและน้ำเปล่าสัดส่วน 1:1 เช็ดตามเคาน์เตอร์ครัวและกรอบประตู',
+                    'โรยแป้งเด็กขวางทางเดินมด',
+                    'ใช้น้ำมันหอมระเหยเปปเปอร์มินต์หยดบริเวณกรอบหน้าต่าง'
+                ],
+                trending: false
+            },
+            {
+                id: 'hk5',
+                category: 'housekeeping',
+                categoryName: 'บ้านและงานบ้าน',
+                title: 'เทคนิคจัดบ้านให้โปร่งสบายสไตล์ KonMari',
+                summary: 'จัดเก็บสิ่งของตามหมวดหมู่ ไม่ใช่จัดตามห้อง และเก็บเฉพาะชิ้นที่ Spark Joy',
+                steps: [
+                    'รวบรวมของหมวดเดียวกันมาไว้ที่เดียว (เช่น เสื้อผ้าทั้งหมด)',
+                    'พับเสื้อผ้าทรงตั้งเพื่อให้เห็นเสื้อทุกตัวในลิ้นชัก',
+                    'กำหนดที่วางถาวรให้ของทุกชิ้นเมื่อใช้เสร็จ'
+                ],
+                trending: false
+            },
+
+            // Work & Productivity
+            {
+                id: 'wk1',
+                category: 'work',
+                categoryName: 'การทำงานและการเรียน',
+                title: 'เทคนิค Pomodoro เอาชนะการผลัดวันประกันพรุ่ง',
+                summary: 'แบ่งเวลาทำงานโฟกัส 25 นาที สลับพัก 5 นาที ทำครบ 4 รอบพักยาว 15-30 นาที',
+                steps: [
+                    'เลือก 1 งานที่ต้องการทำ และปิดการแจ้งเตือนมือถือ',
+                    'ตั้งเวลาโฟกัส 25 นาที (ห้ามสลับไปทำสิ่งอื่น)',
+                    'เมื่อละครบเวลา พักผ่อน 5 นาทีทันที',
+                    'ทำครบ 4 รอบ พักยาว 20-30 นาที'
+                ],
+                trending: true,
+                badge: 'แนะนำ'
+            },
+            {
+                id: 'wk2',
+                category: 'work',
+                categoryName: 'การทำงานและการเรียน',
+                title: 'การบริหารเวลาด้วยกฎ 8-8-8 Balanced Life',
+                summary: 'แบ่งเวลา 24 ชั่วโมงออกเป็น 3 ส่วนเท่าๆ กัน: 8 ชม. ทำงาน, 8 ชม. พักผ่อนส่วนตัว, 8 ชม. นอนหลับ',
+                steps: [
+                    '8 ชั่วโมงทำงาน: โฟกัสเต็มที่ ไม่นำงานกลับไปทำบ้าน',
+                    '8 ชั่วโมงส่วนตัว: ให้เวลากับครอบครัว ออกกำลังกาย งานอดิเรก',
+                    '8 ชั่วโมงการนอน: นอนหลับพักผ่อนให้เพียงพอ'
+                ],
+                trending: false
+            },
+            {
+                id: 'wk3',
+                category: 'work',
+                categoryName: 'การทำงานและการเรียน',
+                title: 'รับมือและป้องกันภาวะ Burnout Syndrome',
+                summary: 'ตัดขอบเขตระหว่างงานและชีวิตส่วนตัว จัดลำดับความสำคัญด้วย Eisenhower Matrix',
+                steps: [
+                    'แบ่งงานเป็น: ด่วน/สำคัญ, ไม่ด่วน/สำคัญ, ด่วน/ไม่สำคัญ',
+                    'ปิดการแจ้งเตือนไลน์งานหลังหมดเวลางาน',
+                    'พูดคุยปรึกษาหัวหน้างานเมื่อภาระงานเกินขีดความสามารถ'
+                ],
+                trending: false
+            },
+            {
+                id: 'wk4',
+                category: 'work',
+                categoryName: 'การทำงานและการเรียน',
+                title: 'การจดโน้ตแบบ Cornell Method สรุปไว จำแม่น',
+                summary: 'แบ่งกระดาษเป็น 3 ส่วน: คอลัมน์จดเนื้อหาหลัก, คอลัมน์คีย์เวิร์ด, และส่วนสรุปด้านล่าง',
+                steps: [
+                    'คอลัมน์ขวา: จดเนื้อหาหลักระหว่างเรียนหรือประชุม',
+                    'คอลัมน์ซ้าย: สรุปคำสำคัญ (Keywords) หรือคำถาม',
+                    'ด้านล่าง: เขียนสรุป 2 ประโยคด้วยภาษาตนเอง'
+                ],
+                trending: false
+            },
+
+            // Health & Wellness
+            {
+                id: 'ht1',
+                category: 'health',
+                categoryName: 'สุขภาพและการนอน',
+                title: 'ปรับ Sleep Hygiene แก้ปัญหานอนไม่หลับ',
+                summary: 'งดจอสมาร์ตโฟนก่อนนอน 1 ชม. ปรับอุณหภูมิห้องให้อยู่ในช่วง 23-25°C',
+                steps: [
+                    'เลี่ยงแสงสีฟ้าจากหน้าจอมือถืออย่างน้อย 45 นาทีก่อนนอน',
+                    'งดกาเฟอีนหลังเวลา 14:00 น.',
+                    'หากผ่านไป 20 นาทียังไม่หลับ ให้ลุกมาอ่านหนังสือไฟสลัวๆ'
+                ],
+                trending: true,
+                badge: 'Hot'
+            },
+            {
+                id: 'ht2',
+                category: 'health',
+                categoryName: 'สุขภาพและการนอน',
+                title: 'ป้องกันและบรรเทาอาการ Office Syndrome',
+                summary: 'ปรับระดับหน้าจอให้อยู่ระดับสายตา ศอกทำมุม 90 องศา และยืดเส้นยืดสายทุกๆ 1 ชั่วโมง',
+                steps: [
+                    'ปรับจอคอมพิวเตอร์ห่างจากสายตา 1 ช่วงแขน',
+                    'ใช้ระบบ Timer ยืดเส้นยืดสายในหน้านี้ทำตาม 30 วินาทีทุกชั่วโมง',
+                    'ดื่มน้ำเปล่าชดเชยอย่างน้อยวันละ 2 ลิตร'
+                ],
+                trending: false
+            },
+
+            // Personal Finance
+            {
+                id: 'fn1',
+                category: 'finance',
+                categoryName: 'การเงินส่วนบุคคล',
+                title: 'จัดระเบียบเงินด้วยกฎ 50/30/20 ฉบับคนเริ่มออม',
+                summary: 'แบ่งเงินออกเป็น 3 ส่วน: 50% ค่าใช้จ่ายจำเป็น, 30% ความสุขส่วนตัว, 20% ออมและลงทุน',
+                steps: [
+                    '50% Needs: ค่าเช่า ค่าน้ำไฟ ค่าอาหาร ห้ามเกินครึ่ง',
+                    '30% Wants: ช้อปปิ้ง ท่องเที่ยว ชาไข่มุก',
+                    '20% Savings: ตั้งโอนเข้าบัญชีเงินออมทันทีที่เงินเดือนออก'
+                ],
+                trending: true,
+                badge: 'ต้องรู้'
+            },
+            {
+                id: 'fn2',
+                category: 'finance',
+                categoryName: 'การเงินส่วนบุคคล',
+                title: 'เทคนิคการปลดหนี้แบบ Snowball Method',
+                summary: 'เรียงลำดับหนี้จากยอดน้อยที่สุดไปหาน้อยที่สุด ชำระขั้นต่ำทุกตัวแล้วทุ่มจ่ายตัวที่ยอดน้อยที่สุดก่อน',
+                steps: [
+                    'จดรายการหนี้ทั้งหมดพร้อมยอดคงเหลือ',
+                    'จ่ายขั้นต่ำหนี้ทุกรายการ แต่ทุ่มเงินโปะยอดหนี้ที่น้อยที่สุดก่อน',
+                    'เมื่อหนี้ตัวเล็กหมด ให้นำเงินก้อนนั้นไปโปะหนี้ตัวถัดไป'
+                ],
+                trending: false
+            },
+
+            // Relationships
+            {
+                id: 'rs1',
+                category: 'relationships',
+                categoryName: 'ความสัมพันธ์',
+                title: 'เทคนิคการปฏิเสธคนอย่างนุ่มนวล (How to say NO)',
+                summary: 'ขอบคุณในความไว้วางใจ ชี้แจงเหตุผลสั้นๆ และเสนอทางเลือกอื่นโดยไม่รู้สึกผิด',
+                steps: [
+                    'ใช้สูตร: ขอบคุณ + ปฏิเสธ + เสนอทางเลือก',
+                    'ไม่ต้องแก้ตัวยาวเกินไป พูดสั้นๆ แต่หนักแน่น',
+                    'หากโดนรบเซ้า ให้ปฏิเสธด้วยประโยคเดิมอย่างนุ่มนวล'
+                ],
+                trending: true,
+                badge: 'ยอดฮิต'
+            },
+            {
+                id: 'rs2',
+                category: 'relationships',
+                categoryName: 'ความสัมพันธ์',
+                title: 'การรับมือกับ Toxic People ในที่ทำงาน',
+                summary: 'ตั้งขอบเขต (Set Boundaries) สนทนาเฉพาะเรื่องงาน และไม่ดึงเอาอารมณ์มาเป็นเรื่องส่วนตัว',
+                steps: [
+                    'สื่อสารเฉพาะข้อเท็จจริงเกี่ยวกับการทำงาน',
+                    'หลีกเลี่ยงการร่วมกลุ่มนินทาหรือถกเถียงเรื่องส่วนตัว',
+                    'ใช้เทคนิค Grey Rock Method (ทำตัวให้น่าเบื่อเหมือนก้อนหิน)'
+                ],
+                trending: false
+            },
+
+            // Tech & Digital Life
+            {
+                id: 'tc1',
+                category: 'tech',
+                categoryName: 'เทคโนโลยีและไอที',
+                title: 'แก้ปัญหามือถือเมมเต็มและเครื่องช้า',
+                summary: 'ล้างข้อมูล Cache ในแอปพลิเคชัน ย้ายรูปภาพขึ้น Cloud และลบแอปที่ไม่ใช้งาน',
+                steps: [
+                    'ล้าง Cache ในแอป LINE (ตั้งค่า -> แชท -> ลบข้อมูลแคช)',
+                    'ใช้ Google Photos หรือ iCloud ฝากรูปแล้วลบในเครื่อง',
+                    'ลบแอปพลิเคชันที่ไม่เคยเปิดใช้งานเกิน 3 เดือน'
+                ],
+                trending: true,
+                badge: 'สายไอที'
+            },
+            {
+                id: 'tc2',
+                category: 'tech',
+                categoryName: 'เทคโนโลยีและไอที',
+                title: 'Google Search Cheat Sheet ตัวช่วยค้นหาขั้นสูง',
+                summary: 'ใช้เครื่องหมาย " " ค้นหาคำตรงตัว, site: สโคปเว็บ, และ filetype: หาไฟล์เอกสาร',
+                steps: [
+                    'ใช้ "คำค้นหา" เพื่อค้นหาข้อความตรงตัวเป๊ะๆ',
+                    'ใช้ site:pantip.com เพื่อค้นหาเฉพาะในเว็บไซต์นั้น',
+                    'ใช้ filetype:pdf เพื่อค้นหาไฟล์เอกสาร PDF โดยตรง'
+                ],
+                trending: false
+            }
+        ];
+
+        // LOCAL STORAGE FOR FAVORITES BOOKMARK
+        let savedFavorites = JSON.parse(localStorage.getItem('lifehacks_saved_v2') || '[]');
+
+        // COMMUNITY MOCK DATA
+        let communityPosts = [
+            { author: 'ช่างเอก สายซ่อม', cat: 'บ้านและงานบ้าน', text: 'ถ้าสติ๊กเกอร์ติดแน่นแกะยาก เอาไดร์เป่าผมจ่อความร้อนสัก 15 วินาที กาวจะละลายแกะง่ายไม่ทิ้งคราบเลยครับ!', time: '10 นาทีที่แล้ว' },
+            { author: 'คุณมิว มนุษย์ออฟฟิศ', cat: 'การทำงานและการเรียน', text: 'เวลาคิดงานไม่ออก ลองลุกไปเดินรอบๆ หรือดื่มน้ำเย็นๆ ไอเดียใหม่ๆ มักจะมาตอนสมองผ่อนคลายครับ', time: '1 ชั่วโมงที่แล้ว' }
+        ];
+
+        // APP INITIALIZATION
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTrendingCards();
+            renderCategoryPages();
+            updateSavedBadge();
+            renderCommunityPosts();
+            calculateBudget();
+            generateDailyFix();
+        });
+
+        // NAVIGATION HANDLER (Single Page Application)
+        function navigateTo(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(el => el.classList.add('hidden'));
+            
+            // Show target page
+            const target = document.getElementById(`page-${pageId}`);
+            if (target) {
+                target.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Update Active Nav Tab Style
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.dataset.page === pageId) {
+                    btn.classList.add('tab-active');
+                } else {
+                    btn.classList.remove('tab-active');
+                }
+            });
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        // RENDER TRENDING CARDS (PAGE 1)
+        function renderTrendingCards() {
+            const container = document.getElementById('trending-container');
+            const items = HACKS_DATA.filter(item => item.trending);
+            container.innerHTML = items.map(item => createCardHTML(item)).join('');
+        }
+
+        // RENDER CATEGORY CARDS (PAGES 2-7)
+        function renderCategoryPages() {
+            const categories = ['housekeeping', 'work', 'health', 'finance', 'relationships', 'tech'];
+            categories.forEach(cat => {
+                const container = document.getElementById(`${cat}-cards`);
+                if (container) {
+                    const items = HACKS_DATA.filter(item => item.category === cat);
+                    container.innerHTML = items.map(item => createCardHTML(item)).join('');
+                }
+            });
+        }
+
+        // CARD HTML TEMPLATE
+        function createCardHTML(item) {
+            const isSaved = savedFavorites.includes(item.id);
+            return `
+                <div class="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-sm hover:shadow-md transition flex flex-col justify-between group">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <span class="px-2.5 py-1 bg-slate-100 text-slate-600 text-[11px] font-bold rounded-lg">${item.categoryName}</span>
+                            ${item.badge ? `<span class="px-2 py-0.5 bg-orange-100 text-orange-600 text-[10px] font-extrabold rounded-md">${item.badge}</span>` : ''}
+                        </div>
+                        <h3 class="font-bold text-slate-800 text-base group-hover:text-teal-600 transition leading-snug">${item.title}</h3>
+                        <p class="text-xs text-slate-500 mt-2 line-clamp-3 leading-relaxed">${item.summary}</p>
+                    </div>
+
+                    <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <button onclick="openDetailModal('${item.id}')" class="text-xs font-bold text-teal-600 hover:text-teal-700 flex items-center gap-1">
+                            อ่านวิธีแก้ปัญหา <i class="fas fa-chevron-right text-[10px]"></i>
+                        </button>
+                        <button onclick="toggleSave('${item.id}', event)" class="p-2 text-slate-400 hover:text-orange-500 transition">
+                            <i class="${isSaved ? 'fas text-orange-500' : 'far'} fa-bookmark"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // FILTER INSIDE CATEGORY
+        function filterCategoryCards(cat, keyword) {
+            const container = document.getElementById(`${cat}-cards`);
+            const filtered = HACKS_DATA.filter(item => 
+                item.category === cat && 
+                (item.title.toLowerCase().includes(keyword.toLowerCase()) || item.summary.toLowerCase().includes(keyword.toLowerCase()))
+            );
+            container.innerHTML = filtered.length > 0 
+                ? filtered.map(item => createCardHTML(item)).join('') 
+                : `<p class="col-span-full text-center text-slate-400 text-sm py-8">ไม่พบวิธีแก้ปัญหาที่ตรงกับคำค้นหา</p>`;
+        }
+
+        // GLOBAL SEARCH
+        function handleGlobalSearch(e) {
+            if (e.key === 'Enter') triggerGlobalSearch();
+        }
+
+        function triggerGlobalSearch() {
+            const query = document.getElementById('global-search-input').value.trim().toLowerCase();
+            if (!query) return;
+
+            const results = HACKS_DATA.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.summary.toLowerCase().includes(query) ||
+                item.categoryName.toLowerCase().includes(query)
+            );
+
+            navigateTo('home');
+            const container = document.getElementById('trending-container');
+            
+            if (results.length > 0) {
+                showToast(`พบ ${results.length} วิธีแก้ไขปัญหา`);
+                container.innerHTML = results.map(item => createCardHTML(item)).join('');
+                container.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                showToast('ไม่พบข้อมูลปัญหานี้ ลองใช้คำสั้นลงครับ', 'info');
+            }
+        }
+
+        // DAILY RANDOM LIFE HACK
+        function generateDailyFix() {
+            const randomIndex = Math.floor(Math.random() * HACKS_DATA.length);
+            const item = HACKS_DATA[randomIndex];
+
+            document.getElementById('daily-fix-cat').innerText = `หมวดหมู่: ${item.categoryName}`;
+            document.getElementById('daily-fix-title').innerText = item.title;
+            document.getElementById('daily-fix-desc').innerText = item.summary;
+        }
+
+        // STRETCHING TIMER LOGIC
+        let stretchInterval = null;
+        let stretchTime = 30;
+
+        function startStretchTimer() {
+            if (stretchInterval) return;
+            const btn = document.getElementById('btn-start-stretch');
+            btn.innerText = 'กำลังนับเวลา...';
+            btn.classList.add('opacity-75');
+
+            stretchInterval = setInterval(() => {
+                stretchTime--;
+                const sec = stretchTime < 10 ? `0${stretchTime}` : stretchTime;
+                document.getElementById('stretch-timer').innerText = `00:${sec}`;
+
+                if (stretchTime <= 0) {
+                    clearInterval(stretchInterval);
+                    stretchInterval = null;
+                    document.getElementById('stretch-pose').innerText = '🎉 ครบ 30 วินาทีแล้ว! สดชื่นขึ้นใช่ไหมครับ';
+                    showToast('ยืดเส้นยืดสายเรียบร้อย!');
+                    btn.innerText = 'เสร็จสิ้น';
+                    btn.classList.remove('opacity-75');
+                }
+            }, 1000);
+        }
+
+        function resetStretchTimer() {
+            clearInterval(stretchInterval);
+            stretchInterval = null;
+            stretchTime = 30;
+            document.getElementById('stretch-timer').innerText = '00:30';
+            document.getElementById('stretch-pose').innerText = 'ท่า: เอียงศีรษะไปทางขวา ค้างไว้';
+            const btn = document.getElementById('btn-start-stretch');
+            btn.innerText = 'เริ่มนับเวลา';
+            btn.classList.remove('opacity-75');
+        }
+
+        // BUDGET CALCULATOR LOGIC
+        function calculateBudget() {
+            const income = parseFloat(document.getElementById('calc-income').value) || 0;
+            const needs = (income * 0.50).toLocaleString('th-TH');
+            const wants = (income * 0.30).toLocaleString('th-TH');
+            const savings = (income * 0.20).toLocaleString('th-TH');
+
+            document.getElementById('res-needs').innerText = `${needs} ฿`;
+            document.getElementById('res-wants').innerText = `${wants} ฿`;
+            document.getElementById('res-savings').innerText = `${savings} ฿`;
+        }
+
+        // DECISION WHEEL SPINNER LOGIC
+        function spinDecisionHelper() {
+            const input = document.getElementById('decision-options').value;
+            const options = input.split(',').map(s => s.trim()).filter(s => s.length > 0);
+            
+            if (options.length < 2) {
+                showToast('กรุณากรอกอย่างน้อย 2 ตัวเลือก โดยใช้จุลภาค (,) แยก', 'info');
+                return;
+            }
+
+            const box = document.getElementById('decision-result-box');
+            const text = document.getElementById('decision-result-text');
+            const btn = document.getElementById('spin-btn');
+
+            btn.disabled = true;
+            text.innerText = '🎲 กำลังสุ่มทางเลือก...';
+            box.classList.add('bg-amber-50', 'border-amber-300');
+
+            setTimeout(() => {
+                const choice = options[Math.floor(Math.random() * options.length)];
+                text.innerText = `👉 คำตอบของคุณคือ: "${choice}"`;
+                box.classList.remove('bg-amber-50', 'border-amber-300');
+                box.classList.add('bg-teal-50', 'border-teal-400');
+                btn.disabled = false;
+                showToast(`ผลการสุ่ม: ${choice}`);
+            }, 1200);
+        }
+
+        // COMMUNITY SUBMISSION LOGIC
+        function handleProblemSubmit(e) {
+            e.preventDefault();
+            const author = document.getElementById('submit-author').value;
+            const cat = document.getElementById('submit-cat').value;
+            const desc = document.getElementById('submit-desc').value;
+
+            const newPost = { author, cat, text: desc, time: 'เมื่อสักครู่' };
+            communityPosts.unshift(newPost);
+            renderCommunityPosts();
+
+            document.getElementById('submit-author').value = '';
+            document.getElementById('submit-desc').value = '';
+            showToast('โพสต์ส่งต่อปัญหาเรียบร้อยแล้ว');
+        }
+
+        function renderCommunityPosts() {
+            const container = document.getElementById('community-posts-container');
+            container.innerHTML = communityPosts.map(post => `
+                <div class="p-3.5 bg-slate-50 border border-slate-100 rounded-2xl text-xs space-y-1">
+                    <div class="flex justify-between items-center text-slate-500">
+                        <span class="font-bold text-slate-700"><i class="fas fa-user-circle text-teal-600 mr-1"></i>${post.author}</span>
+                        <span class="text-[10px] text-slate-400">${post.time}</span>
+                    </div>
+                    <span class="inline-block px-2 py-0.5 bg-teal-100 text-teal-800 text-[10px] font-bold rounded">${post.cat}</span>
+                    <p class="text-slate-600 mt-1 leading-relaxed">${post.text}</p>
+                </div>
+            `).join('');
+        }
+
+        // BOOKMARK / FAVORITES LOCAL STORAGE
+        function toggleSave(id, event) {
+            if (event) event.stopPropagation();
+            
+            const index = savedFavorites.indexOf(id);
+            if (index > -1) {
+                savedFavorites.splice(index, 1);
+                showToast('ยกเลิกการบันทึกแล้ว');
+            } else {
+                savedFavorites.push(id);
+                showToast('บันทึกลง Bookmark เรียบร้อย');
+            }
+
+            localStorage.setItem('lifehacks_saved_v2', JSON.stringify(savedFavorites));
+            updateSavedBadge();
+            renderTrendingCards();
+            renderCategoryPages();
+        }
+
+        function updateSavedBadge() {
+            document.getElementById('saved-count-badge').innerText = savedFavorites.length;
+        }
+
+        function openSavedModal() {
+            const container = document.getElementById('saved-items-list');
+            const items = HACKS_DATA.filter(item => savedFavorites.includes(item.id));
+
+            if (items.length === 0) {
+                container.innerHTML = `<div class="text-center text-slate-400 py-10"><i class="far fa-bookmark text-4xl mb-3 block"></i>ยังไม่มีบทความที่บันทึกไว้</div>`;
+            } else {
+                container.innerHTML = items.map(item => createCardHTML(item)).join('');
+            }
+
+            document.getElementById('saved-modal').classList.remove('hidden');
+        }
+
+        function closeSavedModal() {
+            document.getElementById('saved-modal').classList.add('hidden');
+        }
+
+        // ARTICLE DETAIL MODAL
+        function openDetailModal(id) {
+            const item = HACKS_DATA.find(h => h.id === id);
+            if (!item) return;
+
+            document.getElementById('detail-cat').innerText = item.categoryName;
+            document.getElementById('detail-title').innerText = item.title;
+
+            const stepsHTML = item.steps ? `
+                <div class="mt-4">
+                    <h4 class="font-bold text-slate-800 text-xs uppercase tracking-wider mb-2 text-teal-600">ขั้นตอนการแก้ไขปัญหา:</h4>
+                    <ul class="space-y-2">
+                        ${item.steps.map(step => `<li class="flex items-start gap-2 bg-slate-50 p-3 rounded-xl border border-slate-100 text-xs"><i class="fas fa-check-circle text-teal-500 mt-0.5"></i> <span>${step}</span></li>`).join('')}
+                    </ul>
+                </div>
+            ` : '';
+
+            document.getElementById('detail-body').innerHTML = `
+                <p class="font-medium text-slate-700 text-sm leading-relaxed">${item.summary}</p>
+                ${stepsHTML}
+            `;
+
+            const isSaved = savedFavorites.includes(item.id);
+            const btn = document.getElementById('modal-bookmark-btn');
+            btn.onclick = () => { toggleSave(item.id); openDetailModal(item.id); };
+            btn.className = `px-4 py-2 rounded-xl text-xs font-bold border transition ${isSaved ? 'bg-orange-500 text-white border-orange-500' : 'bg-white text-slate-600 border-slate-200'}`;
+            btn.innerHTML = `<i class="fas fa-bookmark"></i> ${isSaved ? 'บันทึกแล้ว' : 'บันทึกเก็บไว้'}`;
+
+            document.getElementById('detail-modal').classList.remove('hidden');
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detail-modal').classList.add('hidden');
+        }
+
+        // TOAST NOTIFICATION
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            const message = document.getElementById('toast-message');
+            const icon = document.getElementById('toast-icon');
+
+            message.innerText = msg;
+            icon.className = type === 'info' ? 'fas fa-info-circle text-blue-400 text-lg' : 'fas fa-check-circle text-teal-400 text-lg';
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2800);
+        }
+    </script>
+</body>
+</html>
